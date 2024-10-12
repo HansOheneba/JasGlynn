@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('phone');  // New field
+            $table->enum('venue', ['Diplomatic Hall', 'Garden']);  // New field
+            $table->boolean('backup_generator')->default(false);  // New field
+            $table->text('event_description');  // New field
             $table->date('event_date');
             $table->integer('guests');
             $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');

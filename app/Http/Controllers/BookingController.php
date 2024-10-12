@@ -29,10 +29,14 @@ class BookingController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'venue' => 'required|in:Diplomatic Hall,Garden',
+            'backup_generator' => 'boolean',
+            'event_description' => 'required|string|max:1000',
             'event_date' => 'required|date|after:today|unique:bookings,event_date',
             'guests' => 'required|integer|min:1',
         ]);
-        
+
         $booking = Booking::create($validated);
 
         // Send notification emails to admin and booker

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="//unpkg.com/alpinejs" defer></script>
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -16,6 +15,10 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Phone</th>
+                <th>Venue</th>
+                <th>Backup Generator</th>
+                <th>Event Description</th>
                 <th>Event Date</th>
                 <th>Guests</th>
                 <th>Status</th>
@@ -27,6 +30,10 @@
                 <tr>
                     <td>{{ $booking->name }}</td>
                     <td>{{ $booking->email }}</td>
+                    <td>{{ $booking->phone }}</td>
+                    <td>{{ $booking->venue }}</td>
+                    <td>{{ $booking->backup_generator ? 'Yes' : 'No' }}</td>
+                    <td>{{ $booking->event_description }}</td>
                     <td>{{ $booking->event_date }}</td>
                     <td>{{ $booking->guests }}</td>
                     <td>{{ $booking->status }}</td>

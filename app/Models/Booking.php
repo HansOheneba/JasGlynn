@@ -9,5 +9,15 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'event_date', 'guests', 'status'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'venue',
+        'backup_generator',
+        'event_description',
+        'event_date',
+        'guests',
+        'status',
+    ];
 }
