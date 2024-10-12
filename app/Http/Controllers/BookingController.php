@@ -7,7 +7,8 @@ use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookingCreated;
-use App\Mail\BookingStatusUpdated;
+use App\Mail\BookingDeclined;
+use App\Mail\BookingAccepted;
 
 class BookingController extends Controller
 {
@@ -46,6 +47,10 @@ class BookingController extends Controller
     public function accept(Booking $booking)
     {
         $booking->update(['status' => 'accepted']);
+
+        Mail::to('hansopoku360@gmail.com')->send(new BookingAccepted($booking));
+        Mail::to($booking->email)->send(new BookingAccepted($booking));
+
         return back()->with('success', 'Booking accepted.');
     }
 
@@ -53,6 +58,10 @@ class BookingController extends Controller
     public function decline(Booking $booking)
     {
         $booking->update(['status' => 'declined']);
+
+        Mail::to('hansopoku360@gmail.com')->send(new BookingDeclined($booking));
+        Mail::to($booking->email)->send(new BookingDeclined($booking));
+
         return back()->with('success', 'Booking declined.');
     }
 }
