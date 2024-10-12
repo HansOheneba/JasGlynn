@@ -7,6 +7,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+use App\Http\Controllers\BookingController;
+
+Route::get('/book', [BookingController::class, 'showBookingForm']);
+Route::post('/book', [BookingController::class, 'store']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/bookings', [BookingController::class, 'index']);
+    Route::post('/admin/bookings/{booking}/accept', [BookingController::class, 'accept']);
+    Route::post('/admin/bookings/{booking}/decline', [BookingController::class, 'decline']);
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
