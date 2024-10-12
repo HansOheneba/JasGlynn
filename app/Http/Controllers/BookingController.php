@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BookingCreated;
+use App\Mail\BookingStatusUpdated;
 
 class BookingController extends Controller
 {
@@ -23,11 +27,14 @@ class BookingController extends Controller
             'guests' => 'required|integer|min:1',
         ]);
 
-        Booking::create($validated);
+        $booking = Booking::create($validated);
+
+        // Send notification emails to admin and booker
+        Mail::to('hansopoku360@gmail.com')->send(new BookingCreated($booking));
+        Mail::to($booking->email)->send(new BookingCreated($booking));
 
         return redirect('/book')->with('success', 'Booking submitted successfully!');
     }
-
     // Admin dashboard to view bookings
     public function index()
     {
