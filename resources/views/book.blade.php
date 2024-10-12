@@ -75,7 +75,7 @@
 
                 <div class="mb-5">
                     <label for="eventDate" class="block text-base font-medium text-[#07074D] mb-2">Select Event Date</label>
-                    <input type="text" id="eventDate" name="event_date" placeholder="Select a Date"
+                    <input type="text" id="eventDate" name="event_date" placeholder="Tap to select"
                         class="w-full rounded-md border border-gray-300 py-3 px-6 text-base text-gray-700 focus:border-indigo-500 focus:shadow-md"
                         required />
                 </div>

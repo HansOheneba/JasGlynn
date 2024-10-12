@@ -15,12 +15,13 @@ class BookingController extends Controller
     // Show the public booking form
     public function showBookingForm()
     {
-        // Fetch booked dates from the database
-        $bookedDates = Booking::pluck('event_date')->toArray();
+        // Fetch booked dates with status 'pending' or 'accepted'
+        $bookedDates = Booking::whereIn('status', ['pending', 'accepted'])->pluck('event_date')->toArray();
 
         // Pass booked dates to the view
         return view('book', compact('bookedDates'));
     }
+
 
 
     // Store booking in the database
