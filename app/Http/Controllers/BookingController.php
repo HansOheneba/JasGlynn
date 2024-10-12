@@ -15,8 +15,13 @@ class BookingController extends Controller
     // Show the public booking form
     public function showBookingForm()
     {
-        return view('book');
+        // Fetch booked dates from the database
+        $bookedDates = Booking::pluck('event_date')->toArray();
+
+        // Pass booked dates to the view
+        return view('book', compact('bookedDates'));
     }
+
 
     // Store booking in the database
     public function store(Request $request)
@@ -24,10 +29,10 @@ class BookingController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'event_date' => 'required|date|after:today',
+            'event_date' => 'required|date|after:today|unique:bookings,event_date',
             'guests' => 'required|integer|min:1',
         ]);
-
+        
         $booking = Booking::create($validated);
 
         // Send notification emails to admin and booker
