@@ -4,6 +4,7 @@
     <title>Book an Event</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Vite for Tailwind CSS -->
     @vite('resources/css/app.css')
@@ -13,15 +14,52 @@
 
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        /* Custom CSS for opacity transition */
+        .toast {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex items-center justify-center p-12">
         <div class="mx-auto w-full max-w-[550px] bg-white p-8 shadow-lg rounded-md">
-            <h1 class="text-2xl font-semibold text-center text-[#07074D] mb-6">Book Your Event</h1>
+            <h1 class="text-2xl font-semibold text-center text-[#07074D] mb-6">Book Us For an Event</h1>
 
-            @if(session('success'))
-                <p class="mb-4 text-green-600">{{ session('success') }}</p>
-            @endif
+            <div id="toast" class="toast text-sm fixed top-5 right-5 bg-white text-green-500 p-4 rounded-md shadow-lg">
+                <i class="fa fa-solid fa-check text-xs bg-green-500 text-white rounded-full px-1 py-[2px] mx-2"></i>
+                @if(session('success'))
+                    {{ session('success') }}
+                @endif
+            </div>
+
+            <script>
+                // Function to show toast notification
+                function showToast() {
+                    const toast = document.getElementById('toast');
+
+                    // Only show the toast if there is a message
+                    if (toast.textContent.trim() !== '') {
+                        toast.classList.add('show');
+
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        }, 5000); 
+                    }
+                }
+
+                // Show the toast if there is a success message
+                window.onload = function() {
+                    showToast();
+                };
+            </script>
 
             <form action="/book" method="POST">
                 @csrf
@@ -94,6 +132,7 @@
                     </button>
                 </div>
             </form>
+
         </div>
     </div>
 
